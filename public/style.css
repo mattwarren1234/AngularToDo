@@ -3,6 +3,17 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.content-main {
+  width :  590px;
+}
+
+todo-item .container {
+  border: 1px solid black;
+  border-radius: 4px;
+  margin: 2px;
+  padding: 2px;
+}
+
+todo-item .delete {
+  float: right;
 }
