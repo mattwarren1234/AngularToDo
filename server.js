@@ -1,9 +1,10 @@
+'use strict';
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+// var favicon = requ31ire('serve-favicon');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-
+// var mongoose = require('mongoose');
+var apiRoutes = require('./apiProxyRoutes.js');
 var routes = require('./routes.js');
 var app = express();
 
@@ -13,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'components')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
+
+app.use('/api', apiRoutes);
 
 app.use('/', routes);
 

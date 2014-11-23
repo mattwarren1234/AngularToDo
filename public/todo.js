@@ -1,19 +1,9 @@
-angular.module('ToDoApp', [])
-  .controller('ToDoCtrl', function(){
-    this.todos = [
-    ];
-    var instance = this;
-    (function sampleData(){
-       var sampleTodo = {
-        due : new Date(),
-        text : "take dog to cleaners",
-        completed : true
-      };
-      for (var i = 0; i < 5; i++){
-        instance.todos.push(Object.create(sampleTodo));
-      }
-    })();
-  })
+'use strict';
+angular.module('ToDoApp', ['ngResource'])
+  .controller('ToDoCtrl', ['toDoFactory', function(toDoFactory){
+    this.todos = toDoFactory.list.query();
+    // console.log(toDoFactory.list.get());
+  }])
   .directive('todoItem', function () {
     return {
         restrict: 'EA', //E = element, A = attribute, C = class, M = comment         
@@ -26,4 +16,12 @@ angular.module('ToDoApp', [])
         // controller: controllerFunction, //Embed a custom controller in the directive
         // link: function ($scope, element, attrs) { } //DOM manipulation
     };
-});
+  })
+  .factory('toDoFactory', ['$http', '$resource', function($http, $resource){
+    //CORS IS NOT ENABLED!
+    //Post to server as proxy for now.
+    return {
+      list : $resource('/api/task/list'),
+      item : $resource('/api/task/:id'),
+    };
+  }]);
