@@ -10,7 +10,7 @@
   todos:
   <div class="content-main">
     <div class="header">
-      <input type="checkbox">
+      <input ng-model='main.selectAll' type="checkbox">
       <span ng-show="main.itemSelected">
         <button>Delete all</button>
         <button>Mark all complete</button>
@@ -24,7 +24,8 @@
        <todo-item ng-repeat="item in main.todos" todo-data="item" on-delete="main.deleteItem(item)"
        on-update="main.updateItem(item)"
        on-complete="main.completeItem(item)"
-       on-select="main.selectItem(msg, item)"></todo-item>
+       on-select="main.selectItem(msg, item)"
+       selected="main.selectAll"></todo-item>
     </div>
     <!-- <div class="inner"> -->
       <button class="center">+</button>

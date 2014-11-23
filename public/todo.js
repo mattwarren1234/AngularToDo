@@ -2,9 +2,12 @@
 angular.module('ToDoApp', ['ngResource'])
   .controller('ToDoCtrl', ['toDoFactory', function(toDoFactory){
     this.todos = toDoFactory.list.query();
+    this.selectAll = false;
     // console.log(toDoFactory.item.query({id:1}));
     // console.log(toDoFactory.list.get());
-    this.itemSelected = false;
+    this.toggleSelected = function () {
+      console.log(this.itemSelected);
+    };
     this.deleteItem = function(item) {
     };
     this.updateItem = function (item) {
@@ -19,9 +22,11 @@ angular.module('ToDoApp', ['ngResource'])
         restrict: 'EA', //E = element, A = attribute, C = class, M = comment         
         scope: {
             //@ reads the attribute value, = provides two-way binding, & works with functions
-            todoData: '=',       
+            todoData: '=',   
+            selected: '=',
             onDelete: '&',
-            onSelect: '&'
+            onSelect: '&',
+            onComplete: '&',
         },
         templateUrl : 'todoItem.html'
         // template: '<div>{{todoData.due}}{{todoData.text}}{{todoData.completed}}</div>',
