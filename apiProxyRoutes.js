@@ -5,27 +5,39 @@ var request = require('request');
 var router = express.Router();
 
 router.get('/task/list', function(req, res){
-  request('http://todo.ceresti.com:8080/task/list', 
+  request.get('http://todo.ceresti.com:8080/task/list', 
     function (error, response, body) {
       console.log(body);
       res.send(body);
-      // if(response.statusCode == 201){
-      // } else {
-      //   console.log('error: '+ response.statusCode);
-      //   console.log(body);
-      // }
     }
     );
-  // request
-  //   .get('http://todo.ceresti.com:8080/task/list')
-  //   .on('response', function(response) {
-  //       response.on('data', function(data) {
-  //         res.send(data);
+});
 
-  //         // compressed data as it is received
-  //       });
-  //     // console.log(JSON.stringify(response));
-  //   });
+router.post('/task/:id', function(req, res){
+  console.log(req.id);
+  return;
+  request.get('http://todo.ceresti.com:8080/task/'+req.id,
+    function(error, response, body){
+      res.send(body);
+    });
+});
+//I DON'T THINK THIS WORKS...YET
+router.get('/task/:id', function(req, res){
+  request.get('http://todo.ceresti.com:8080/task/'+req.id,
+    function(error, response, body){
+      res.send(body);
+    });
+});
+//NOT YET TESTED
+router.put('/task/:id', function(req, res){
+  if (req.id){
+    res.send('');
+  }
+  request.put('http://todo.ceresti.com:8080/task/'+req.id, 
+    function (error, response, body) {
+      console.log(body);
+      res.send(body);
+    });
 });
 
 module.exports = router;

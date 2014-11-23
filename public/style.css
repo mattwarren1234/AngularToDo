@@ -17,3 +17,8 @@ todo-item .container {
 todo-item .delete {
   float: right;
 }
+
+.center {
+  display: block;
+  margin: 0 auto;
+}

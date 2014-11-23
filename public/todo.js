@@ -2,14 +2,26 @@
 angular.module('ToDoApp', ['ngResource'])
   .controller('ToDoCtrl', ['toDoFactory', function(toDoFactory){
     this.todos = toDoFactory.list.query();
+    // console.log(toDoFactory.item.query({id:1}));
     // console.log(toDoFactory.list.get());
+    this.itemSelected = false;
+    this.deleteItem = function(item) {
+    };
+    this.updateItem = function (item) {
+    };
+    this.selectItem =function (data, item) {
+      console.log(data);
+      console.log(item);
+    };
   }])
   .directive('todoItem', function () {
     return {
         restrict: 'EA', //E = element, A = attribute, C = class, M = comment         
         scope: {
             //@ reads the attribute value, = provides two-way binding, & works with functions
-            todoData: '='       
+            todoData: '=',       
+            onDelete: '&',
+            onSelect: '&'
         },
         templateUrl : 'todoItem.html'
         // template: '<div>{{todoData.due}}{{todoData.text}}{{todoData.completed}}</div>',
@@ -25,3 +37,4 @@ angular.module('ToDoApp', ['ngResource'])
       item : $resource('/api/task/:id'),
     };
   }]);
+

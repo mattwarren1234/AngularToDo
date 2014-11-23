@@ -11,16 +11,24 @@
   <div class="content-main">
     <div class="header">
       <input type="checkbox">
-      <button>Delete all</button>
-      <button>Mark all complete</button>
+      <span ng-show="main.itemSelected">
+        <button>Delete all</button>
+        <button>Mark all complete</button>
+      </span>
       <select>
         <option>Sort by due (newest first)</option>
         <option>Sort by due (oldest first)</option>
       </select>
     </div>
     <div class="todoList">
-       <todo-item ng-repeat="item in main.todos" todo-data="item"></todo-item>
+       <todo-item ng-repeat="item in main.todos" todo-data="item" on-delete="main.deleteItem(item)"
+       on-update="main.updateItem(item)"
+       on-complete="main.completeItem(item)"
+       on-select="main.selectItem(msg, item)"></todo-item>
     </div>
+    <!-- <div class="inner"> -->
+      <button class="center">+</button>
+    <!-- </div> -->
     <!-- <ul> -->
       <!-- <li ng-repeat="item in main.todos"> -->
 
