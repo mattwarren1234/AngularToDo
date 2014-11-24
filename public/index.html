@@ -1,40 +1,14 @@
 <!DOCTYPE html>
-<html ng-app="ToDoApp">
+<html ng-app="TodoApp">
 <head>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-resource.min.js"></script>
+<script src="/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 <link rel="stylesheet" href="style.css">
 <script src="todo.js"></script>
 </head>
-<body ng-controller="ToDoCtrl as main">
-  todos:
-  <div class="content-main">
-    <div class="header">
-      <input ng-model='main.selectAll' type="checkbox">
-      <span ng-show="main.itemSelected">
-        <button>Delete all</button>
-        <button>Mark all complete</button>
-      </span>
-      <select>
-        <option>Sort by due (newest first)</option>
-        <option>Sort by due (oldest first)</option>
-      </select>
-    </div>
-    <div class="todoList">
-       <todo-item ng-repeat="item in main.todos" todo-data="item" on-delete="main.deleteItem(item)"
-       on-update="main.updateItem(item)"
-       on-complete="main.completeItem(item)"
-       on-select="main.selectItem(msg, item)"
-       selected="main.selectAll"></todo-item>
-    </div>
-    <!-- <div class="inner"> -->
-      <button class="center">+</button>
-    <!-- </div> -->
-    <!-- <ul> -->
-      <!-- <li ng-repeat="item in main.todos"> -->
-
-       <!-- </li> -->
-    <!-- </ul> -->
-  </div>
+<body >
+<div ng-include src="'/todoList.html'">
+</div>
 </body>
 </html>

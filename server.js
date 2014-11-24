@@ -8,12 +8,11 @@ var apiRoutes = require('./apiProxyRoutes.js');
 var routes = require('./routes.js');
 var app = express();
 
-// uncomment after placing your favicon in /public
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'components')));
-app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use('/components', express.static(path.join(__dirname, 'components')));
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/api', apiRoutes);
 

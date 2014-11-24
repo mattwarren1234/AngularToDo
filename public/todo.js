@@ -1,10 +1,21 @@
 'use strict';
-angular.module('ToDoApp', ['ngResource'])
-  .controller('ToDoCtrl', ['toDoFactory', function(toDoFactory){
-    this.todos = toDoFactory.list.query();
+angular.module('TodoApp', ['ngResource', 'angularModalService'])
+  .controller('TodoList', ['todoFactory', 'ModalService', function(todoFactory, ModalService){
+    this.todos = todoFactory.list.query();
     this.selectAll = false;
-    // console.log(toDoFactory.item.query({id:1}));
-    // console.log(toDoFactory.list.get());
+    // console.log(todoFactory.item.query({id:1}));
+    // console.log(todoFactory.list.get());
+    this.addItem = function () {
+      ModalService.showModal({
+          templateUrl: 'modal.html',
+          controller: "ModalController"
+      }).then(function(modal) {
+          modal.element.modal();
+          modal.close.then(function(result) {
+              // $scope.message = "You said " + result;
+          });
+        });
+    };
     this.toggleSelected = function () {
       console.log(this.itemSelected);
     };
@@ -34,7 +45,7 @@ angular.module('ToDoApp', ['ngResource'])
         // link: function ($scope, element, attrs) { } //DOM manipulation
     };
   })
-  .factory('toDoFactory', ['$http', '$resource', function($http, $resource){
+  .factory('todoFactory', ['$http', '$resource', function($http, $resource){
     //CORS IS NOT ENABLED!
     //Post to server as proxy for now.
     return {
@@ -42,4 +53,3 @@ angular.module('ToDoApp', ['ngResource'])
       item : $resource('/api/task/:id'),
     };
   }]);
-
