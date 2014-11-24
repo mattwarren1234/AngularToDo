@@ -1,0 +1,22 @@
+{
+  "name": "AngularToDo",
+  "version": "0.0.0",
+  "authors": [
+    "Matt Warren <mattwarrenmail@gmail.com>"
+  ],
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-modal-service": "~0.4.0"
+  }
+}
