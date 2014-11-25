@@ -4,7 +4,7 @@ angular.module('TodoApp')
   this.description = null;
   this.cal = {
     today : $filter('date')(new Date(), 'shortDate'),
-    current : $filter('date')(new Date(), 'shortDate'),
+    selected : $filter('date')(new Date(), 'shortDate'),
     clear : function(){
       this.date = null;
     },
@@ -13,7 +13,7 @@ angular.module('TodoApp')
       $event.stopPropagation();
       this.opened = true;
     },
-    format : 'dd-MMMM-yyyy',
+    format : 'shortDate',
     options : {
       startingDay: 1,
       formatYear: 'yy',
@@ -22,9 +22,9 @@ angular.module('TodoApp')
     }
   };
 
-  this.ok = function () {
-    $modalInstance.close( { description: this.description, date : this.cal.today} );
-    // $modalInstance.close(this.selected.item);
+  this.save = function () {
+    if ($scope.signup_form.due.$valid && $scope.signup_form.description.$valid)
+      $modalInstance.close( { description: this.description, date : this.cal.selected} );
   };
 
   this.cancel = function () {
