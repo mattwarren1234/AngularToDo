@@ -1,4 +1,6 @@
 <div class="container" ng-click="itemSelected">
+<!-- [ { "Id": 0, "Description": "air", "DueDate": "20140405", "Completed": false  -->
+
   <input ng-checked='selected' type="checkbox" ng-click="onSelect({msg: 'aa'})">
   <button ng-click="onComplete()">✔</button>
   <span class="content"> {{todoData.DueDate}}</span>
@@ -6,5 +8,3 @@
   <span class="content"> {{todoData.Completed}}</span>
   <button class="delete" ng-click="onDelete()">X</button>
 </div>
-
-<!-- [ { "Id": 0, "Description": "air", "DueDate": "20140405", "Completed": false  -->

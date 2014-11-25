@@ -17,6 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular-modal-service": "~0.4.0"
+    "angular-bootstrap": "~0.12.0"
   }
 }

@@ -1,0 +1,28 @@
+<div class="content-main" ng-controller="TodoList as list">
+  <div class="header">
+    <input ng-model='list.selectAll' type="checkbox" class='squaredOne'>
+
+        <!-- .squaredOne -->
+        <div class="squaredOne">
+          <input type="checkbox" value="None" id="squaredOne" name="check" checked />
+          <label for="squaredOne"></label>
+        </div>
+        <!-- end .squaredOne -->
+    <span ng-show="list.itemSelected">
+      <button>Delete all</button>
+      <button>Mark all complete</button>
+    </span>
+    <select>
+      <option>Sort by due (newest first)</option>
+      <option>Sort by due (oldest first)</option>
+    </select>
+  </div>
+  <div class="todoList">
+     <todo-item ng-repeat="item in list.todos" todo-data="item" on-delete="list.deleteItem(item)"
+     on-update="list.updateItem(item)"
+     on-complete="list.completeItem(item)"
+     on-select="list.selectItem(msg, item)"
+     selected="list.selectAll"></todo-item>
+  </div>
+  <button class="center" ng-click="list.addItem()">+</button>
+</div>

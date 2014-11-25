@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create a new task</h4>
+</div>
+<div class="modal-body">
+<h5>Description:</h5>
+<input type="text"  ng-model="description">
+
+<h5>Due:</h5>
+      <p class="input-group">
+        <input type="text" class="form-control" 
+          datepicker-popup="short date"
+          ng-model="newTodo.cal.current"
+          is-open="newTodo.cal.opened"
+          min-date="newTodo.cal.today"
+          datepicker-options="newTodo.cal.options"
+          ng-required="true"
+          close-text="Close" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="newTodo.cal.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="newTodo.ok()">OK</button>
+    <button class="btn btn-warning" ng-click="newTodo.cancel()">Cancel</button>
+</div>

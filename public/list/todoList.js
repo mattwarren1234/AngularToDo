@@ -1,20 +1,21 @@
 'use strict';
-angular.module('TodoApp', ['ngResource', 'angularModalService'])
-  .controller('TodoList', ['todoFactory', 'ModalService', function(todoFactory, ModalService){
+angular.module('TodoApp')
+  .controller('TodoList', ['todoFactory', '$modal', function(todoFactory, $modal){
     this.todos = todoFactory.list.query();
     this.selectAll = false;
-    // console.log(todoFactory.item.query({id:1}));
-    // console.log(todoFactory.list.get());
     this.addItem = function () {
-      ModalService.showModal({
-          templateUrl: 'modal.html',
-          controller: "ModalController"
-      }).then(function(modal) {
-          modal.element.modal();
-          modal.close.then(function(result) {
-              // $scope.message = "You said " + result;
-          });
-        });
+      var size = 'sm'; //'lg', 'sm'
+      var modalInstance = $modal.open({
+        templateUrl: 'item/newTodo.html',
+        size: size,
+        controller : 'newTodoCtrl as newTodo'
+      });
+      modalInstance.result.then(function (selectedItem) {
+        var selected = selectedItem;
+        // $scope.selected = selectedItem;
+      }, function () {
+        // $log.info('Modal dismissed at: ' + new Date());
+      });
     };
     this.toggleSelected = function () {
       console.log(this.itemSelected);
@@ -28,6 +29,7 @@ angular.module('TodoApp', ['ngResource', 'angularModalService'])
       console.log(item);
     };
   }])
+
   .directive('todoItem', function () {
     return {
         restrict: 'EA', //E = element, A = attribute, C = class, M = comment         
@@ -39,10 +41,7 @@ angular.module('TodoApp', ['ngResource', 'angularModalService'])
             onSelect: '&',
             onComplete: '&',
         },
-        templateUrl : 'todoItem.html'
-        // template: '<div>{{todoData.due}}{{todoData.text}}{{todoData.completed}}</div>',
-        // controller: controllerFunction, //Embed a custom controller in the directive
-        // link: function ($scope, element, attrs) { } //DOM manipulation
+        templateUrl : "item/todoItem.html"
     };
   })
   .factory('todoFactory', ['$http', '$resource', function($http, $resource){
