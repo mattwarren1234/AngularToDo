@@ -1,9 +1,10 @@
 'use strict';
 angular.module('TodoApp')
-.controller('newTodoCtrl', function  ($modalInstance){
+.controller('newTodoCtrl', function  ($modalInstance, $scope, $filter){
   this.description = null;
   this.cal = {
-    current : new Date(),
+    today : $filter('date')(new Date(), 'shortDate'),
+    current : $filter('date')(new Date(), 'shortDate'),
     clear : function(){
       this.date = null;
     },
@@ -12,16 +13,17 @@ angular.module('TodoApp')
       $event.stopPropagation();
       this.opened = true;
     },
-    today : new Date(),
+    format : 'dd-MMMM-yyyy',
     options : {
       startingDay: 1,
+      formatYear: 'yy',
+      showWeeks : 'false',
       todayHighlight : true,
     }
   };
 
   this.ok = function () {
-    $modalInstance.close();
-
+    $modalInstance.close( { description: this.description, date : this.cal.today} );
     // $modalInstance.close(this.selected.item);
   };
 

@@ -6,8 +6,8 @@ angular.module('TodoApp')
     this.addItem = function () {
       var size = 'sm'; //'lg', 'sm'
       var modalInstance = $modal.open({
-        templateUrl: 'item/newTodo.html',
         size: size,
+        templateUrl: 'item/newTodo.html',
         controller : 'newTodoCtrl as newTodo'
       });
       modalInstance.result.then(function (selectedItem) {
