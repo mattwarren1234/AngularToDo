@@ -1,8 +1,14 @@
 'use strict';
 angular.module('TodoApp')
-  .controller('TodoList', ['todoFactory', '$modal', function(todoFactory, $modal){
+  .controller('TodoList', ['todoFactory', '$modal', '$q', '$window', function(todoFactory, $modal, $q, $window){
     this.selectedItems = [];
-    this.selectAll = true;
+    this.selectAll = false;
+
+    this.getList = function(){
+      this.todos = todoFactory.list.query();
+    };
+    this.getList();
+
     this.toggleSelectAll = function(){
       if (this.selectAll){
         this.selectedItems = this.todos.slice(0); 
@@ -11,11 +17,16 @@ angular.module('TodoApp')
       }
     };
     this.deleteSelected = function(){
-      alert('delete selected items?');
-      return;
+      if (!$window.confirm('Delete selected items?')) return;
+      var operations = [];
+      var instance = this;
       this.selectedItems.forEach(function(item){
-         todoFactory.item.delete({id : item.Id});
+        operations.push(todoFactory.item.delete({id : item.Id}));
       });
+      $q.all(operations)
+        .then(function(){
+          instance.getList();
+        });
     };
     this.completeSelected = function(){
       this.selectedItems.forEach(function(item){
@@ -23,17 +34,13 @@ angular.module('TodoApp')
       });
     };
 
-    this.getList = function(){
-      this.todos = todoFactory.list.query();
-    };
-    this.getList();
 
     this.addItem = function () {
       var size = 'sm'; //'lg', 'sm'
       var instance = this;
       var modalInstance = $modal.open({
         size: size,
-        templateUrl: 'item/newTodo.html',
+        templateUrl: 'item/new/newTodo.html',
         controller : 'newTodoCtrl as newTodo'
       });
       modalInstance.result.then(function (newTodo) {
@@ -67,14 +74,14 @@ angular.module('TodoApp')
       todoFactory.item.update({id : item.Id});
     };
     this.itemSelect =function (selected, item) {
+      console.log(selected);
       if (selected){
-        // this.selectedItems.push(item);
+        this.selectedItems.push( item);
       } else {
         removeFromArray(item, this.selectedItems);
       }
     };
   }])
-
   .directive('todoItem', function () {
     return {
         restrict: 'EA', //E = element, A = attribute, C = class, M = comment         
@@ -88,7 +95,10 @@ angular.module('TodoApp')
             onSelect: '&',
             onComplete: '&',
         },
-        templateUrl : "item/todoItem.html"
+        templateUrl : "item/todoItem.html",
+        controller : function  ($scope) {
+          $scope.isChecked = true;
+        }
     };
   })
   .factory('todoFactory', ['$http', '$resource', function($http, $resource){

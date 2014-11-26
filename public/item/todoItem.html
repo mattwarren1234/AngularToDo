@@ -1,8 +1,9 @@
 <div class="container" ng-click="itemSelected">
-  <input ng-checked="checked" type="checkbox" ng-click="onSelect({checked: isChecked})">
-  <button ng-click="onComplete()">✔</button>
-  <span class="content"> {{todoData.DueDate}}</span>
-  <span class="content"> {{todoData.Description}}</span>
-  <span class="content"> {{todoData.Completed}}</span>
-  <button class="delete" ng-click="onDelete()">X</button>
+  <input ng-checked="checked" ng-model="isChecked" type="checkbox" ng-click="onSelect({checked: isChecked})">
+  <button type="button" ng-click="onComplete()">✔</button>
+  <span class="dueDate"> {{todoData.DueDate }}</span>
+  <span class="dueDate"> {{todoData.DueDate | date : 'shortDate' }}</span>
+  <span class="description"> {{todoData.Description}}</span>
+  <span class="completed"> Completed : {{todoData.Completed}}</span>
+  <button type="button" class="delete" ng-click="onDelete()">X</button>
 </div>
