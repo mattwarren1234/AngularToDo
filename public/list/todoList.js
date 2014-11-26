@@ -44,33 +44,45 @@ angular.module('TodoApp')
         });
 
     };
+    var defaultModalOptions = function(){
+      return {
+        size : 'sm',
+        templateUrl: 'item/new/newTodo.html',
+        controller : 'newTodoCtrl as newTodo',
+      };
+    };
+    
+    this.editItem = function(itemToEdit){
+      var instance = this;
+      var modalOptions = defaultModalOptions();
+      modalOptions.resolve = { itemToEdit : function () { return itemToEdit; }};
+      $modal.open(modalOptions)
+        .result.then(function(updatedItem){
+          console.log('item updated!');
+          //update local copy
+          instance.todos.splice(instance.todos.indexOf(itemToEdit), 1, updatedItem);
+          todoFactory.item.update({id : updatedItem.Id, details : updatedItem});
+        });
+    };
 
     this.addItem = function () {
-      var size = 'sm'; //'lg', 'sm'
       var instance = this;
-      var modalInstance = $modal.open({
-        size: size,
-        templateUrl: 'item/new/newTodo.html',
-        controller : 'newTodoCtrl as newTodo'
-      });
-      modalInstance.result.then(function (newTodo) {
-        console.log('item saved!' + newTodo);
-        todoFactory.newItem.save(newTodo)
-          .$promise.then(function(response) {
-            instance.todos.push(response);
-          });
-      }, function () {
-        console.log('modal dismissed?');
+      var modalOptions = defaultModalOptions();
+      modalOptions.resolve =  { itemToEdit : null };
+      $modal.open(modalOptions)
+        .result.then(function (newTodo) {
+          todoFactory.newItem.save(newTodo)
+            .$promise.then(function(response) {
+              instance.todos.push(response);
+        });
       });
     };
+
     var removeFromArray = function(item, arr){
       var position = arr.indexOf(item);
       if (position > -1) { arr.splice(position, 1); }
     };  
 
-    this.toggleSelected = function () {
-      console.log(this.itemSelected);
-    };
     this.deleteItem = function(item) {
       //Remove from local list
       removeFromArray(item, this.todos);
@@ -80,9 +92,11 @@ angular.module('TodoApp')
           //was considering getting the list again....hmm.
           });
     };
+
     this.updateItem = function (item) {
       todoFactory.item.update({id : item.Id});
     };
+
     this.itemSelect =function (selected, item) {
       console.log(selected);
       if (selected){
@@ -91,5 +105,5 @@ angular.module('TodoApp')
         removeFromArray(item, this.selectedItems);
       }
     };
-  }])
+  }]);
 

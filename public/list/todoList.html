@@ -18,7 +18,11 @@
   </div>
   {{list.selectAll.val}}
   <div class="todoList">
-     <todo-item ng-repeat="item in list.todos" todo-data="item" on-delete="list.deleteItem(item)"
+     <todo-item 
+     ng-click="list.editItem(item)"
+     ng-repeat="item in list.todos" 
+     todo-data="item" 
+     on-delete="list.deleteItem(item)"
      on-update="list.updateItem(item)"
      on-complete="list.completeItem(item)"
      on-select="list.itemSelect(checked, item )"
