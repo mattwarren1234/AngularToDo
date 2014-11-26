@@ -1,11 +1,11 @@
-<div class="modal-header">
+  <div class="modal-header">
   <h4 class="modal-title">Create a new task</h4>
 </div>
 <div class="modal-body">
-<form name="signup_form" ng-submit="newTodo.save()" novalidate>
+<form name="signupForm" ng-submit="newTodo.save()" novalidate>
   <fieldset>
       <div class="control-group" 
-        ng-class="{'has-error' : signup_form.description.$touched && signup_form.description.$invalid}">
+        ng-class="{'has-error' : signupForm.description.$touched && signupForm.description.$invalid}">
         <label for="description">Description:</label>
         <input type="text" 
           class="form-control input-sm"
@@ -14,12 +14,12 @@
           ng-model="newTodo.description" 
           required />
           <label
-            ng-show="signup_form.description.$touched && signup_form.description.$invalid"
+            ng-show="signupForm.description.$touched && signupForm.description.$invalid"
             class="control-label" for="description">Description required</label>
       </div>
   </fieldset>
   <div class="control-group" 
-    ng-class="{'has-error' : signup_form.due.$touched && signup_form.due.$invalid}">
+    ng-class="{'has-error' : signupForm.due.$touched && signupForm.due.$invalid}">
     <label for="due">Due:</label>
     <p class="input-group">
         <input type="text" 
@@ -39,7 +39,7 @@
             ng-click="newTodo.cal.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
       </p>
-      <label ng-show="signup_form.due.$touched && signup_form.due.$invalid" 
+      <label ng-show="signupForm.due.$touched && signupForm.due.$invalid" 
         class="control-label" 
         for="due">Valid date required</label>
   </div> <!-- control group for due date -->

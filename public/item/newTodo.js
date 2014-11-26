@@ -23,8 +23,13 @@ angular.module('TodoApp')
   };
 
   this.save = function () {
-    if ($scope.signup_form.due.$valid && $scope.signup_form.description.$valid)
-      $modalInstance.close( { description: this.description, date : this.cal.selected} );
+    if ($scope.signupForm.due.$valid && $scope.signupForm.description.$valid){
+      $modalInstance.close( 
+        { Description: this.description, 
+          DueDate : $filter('date')(this.cal.selected, 'shortDate'),
+          Completed : false
+        } );
+    }
   };
 
   this.cancel = function () {

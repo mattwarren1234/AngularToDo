@@ -13,17 +13,35 @@ router.get('/task/list', function(req, res){
     );
 });
 
-router.post('/task/:id', function(req, res){
-  console.log(req.id);
-  return;
-  request.get('http://todo.ceresti.com:8080/task/'+req.id,
+router.delete('/task/delete/:id', function(req, res){
+  request.del('http://todo.ceresti.com:8080/task/delete/' + req.params.id,
     function(error, response, body){
       res.send(body);
     });
 });
+
+router.post('/task/add', function(req, res){
+  // try{
+  //   JSON.parse(req.body);
+  //   console.log('body is valid json!');
+  // }catch(err){
+  //   console.log(err);
+  // }
+  // res.send('');
+  // return;
+  request.post(
+   {  url :'http://todo.ceresti.com:8080/task/add',
+      json : true,
+      body : req.body
+   },
+    function(error, response, body){
+      res.send(body);
+    });
+});
+
 //I DON'T THINK THIS WORKS...YET
 router.get('/task/:id', function(req, res){
-  request.get('http://todo.ceresti.com:8080/task/'+req.id,
+  request.get('http://todo.ceresti.com:8080/task/'+req.params.id,
     function(error, response, body){
       res.send(body);
     });

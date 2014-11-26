@@ -1,7 +1,5 @@
 <div class="container" ng-click="itemSelected">
-<!-- [ { "Id": 0, "Description": "air", "DueDate": "20140405", "Completed": false  -->
-
-  <input ng-checked='selected' type="checkbox" ng-click="onSelect({msg: 'aa'})">
+  <input ng-checked="checked" type="checkbox" ng-click="onSelect({checked: isChecked})">
   <button ng-click="onComplete()">✔</button>
   <span class="content"> {{todoData.DueDate}}</span>
   <span class="content"> {{todoData.Description}}</span>

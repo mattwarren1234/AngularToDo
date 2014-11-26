@@ -1,9 +1,7 @@
 'use strict';
 var express = require('express');
 var path = require('path');
-// var favicon = requ31ire('serve-favicon');
 var bodyParser = require('body-parser');
-// var mongoose = require('mongoose');
 var apiRoutes = require('./apiProxyRoutes.js');
 var routes = require('./routes.js');
 var app = express();
