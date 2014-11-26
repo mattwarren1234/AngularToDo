@@ -16,6 +16,7 @@ angular.module('TodoApp')
         this.selectedItems = [];
       }
     };
+
     this.deleteSelected = function(){
       if (!$window.confirm('Delete selected items?')) return;
       var operations = [];
@@ -24,16 +25,25 @@ angular.module('TodoApp')
         operations.push(todoFactory.item.delete({id : item.Id}));
       });
       $q.all(operations)
-        .then(function(){
+        .then(function onComplete(){
           instance.getList();
+          instance.selectedItems = [];
         });
     };
-    this.completeSelected = function(){
-      this.selectedItems.forEach(function(item){
-         todoFactory.item.complete({id : item.Id});
-      });
-    };
 
+    this.completeSelected = function(){
+      var operations = [];
+      var instance = this;
+      this.selectedItems.forEach(function(item){
+         operations.push(todoFactory.item.update({id : item.Id}));
+      });
+      $q.all(operations)
+        .then(function onComplete(){
+          instance.getList();
+          instance.selectedItems = [];
+        });
+
+    };
 
     this.addItem = function () {
       var size = 'sm'; //'lg', 'sm'
@@ -82,34 +92,4 @@ angular.module('TodoApp')
       }
     };
   }])
-  .directive('todoItem', function () {
-    return {
-        restrict: 'EA', //E = element, A = attribute, C = class, M = comment         
-        scope: {
-            //@ reads the attribute value, = provides two-way binding, & works with functions
-            todoData: '=',
-            testBind: '=',   
-            selected: '=',
-            onDelete: '&',
-            checked: '=',
-            onSelect: '&',
-            onComplete: '&',
-        },
-        templateUrl : "item/todoItem.html",
-        controller : function  ($scope) {
-          $scope.isChecked = true;
-        }
-    };
-  })
-  .factory('todoFactory', ['$http', '$resource', function($http, $resource){
-    //CORS IS NOT ENABLED! Post to node server as proxy for now.
 
-    //Need to modify default item resource because 'delete' resource is at different path
-    var itemResource = $resource('/api/task/:id');
-    itemResource.delete = $resource('/api/task/delete/:id').delete;
-    return {
-      list : $resource('/api/task/list'),
-      item : itemResource,
-      newItem : $resource('/api/task/add')
-    };
-  }]);
