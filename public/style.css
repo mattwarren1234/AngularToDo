@@ -78,3 +78,14 @@ squaredOne {
 .inputErrorMsg {
   
 }
+.container.todoItem{
+  border-color: rgb(168, 168, 168);
+}
+div.todoItem.container:target{
+  background-color:black;
+
+  }
+div.todoItem.container:hover{
+  background-color:rgb(209, 222, 255);
+  cursor:pointer;
+  }

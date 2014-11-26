@@ -1,9 +1,15 @@
-<div class="container" ng-click="itemSelected">
+<div class="container todoItem" ng-click="itemSelected">
+  {{todoData.Id}}
+  <p ng-show="todoData.Id === 0">Item invalid - id of 0</p>
+  <i class="glyphicon glyphicon-unchecked"></i>
   <input ng-checked="checked" ng-model="isChecked" type="checkbox" ng-click="onSelect({checked: isChecked})">
-  <button type="button" ng-click="onComplete()">✔</button>
-  <span class="dueDate"> {{todoData.DueDate }}</span>
-  <span class="dueDate"> {{todoData.DueDate | date : 'shortDate' }}</span>
-  <span class="description"> {{todoData.Description}}</span>
-  <span class="completed"> Completed : {{todoData.Completed}}</span>
-  <button type="button" class="delete" ng-click="onDelete()">X</button>
+  <button type="button" ng-click="onComplete()"><i class="glyphicon glyphicon-ok"></i></button>
+  <span class="content" ng-click="onEdit()">
+    <span class="dueDate"> {{todoData.DueDate | date : 'shortDate' }}</span>
+    <span class="description"> {{todoData.Description}}</span>
+    <span class="completed"> Completed : {{todoData.Completed}}</span>
+  </span>
+   <button type="button" class="delete" ng-click="onDelete()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </button>
 </div>

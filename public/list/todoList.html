@@ -1,6 +1,7 @@
+<h2 class="center">Todo list</h2>
 <div class="content-main" ng-controller="TodoList as list">
   <div class="header">
-    <input type="checkbox" ng-model="list.selectAll" ng-click="list.toggleSelectAll()">
+    <input type="checkbox" ng-model="list.selectAll" ng-click="list.toggleSelectAll(list.selectAll)">
         <!-- .squaredOne -->
        <!--  <div class="squaredOne">
           <input type="checkbox" value="None" id="squaredOne" name="check" checked />
@@ -9,25 +10,30 @@
         <!-- end .squaredOne -->
     <span ng-show="list.selectedItems.length > 0">
       <button type="button" ng-click="list.deleteSelected()">Delete Selected</button>
-      <button type="button" ng-click="list.completeSelcted()">Mark complete</button>
+      <button type="button" ng-click="list.completeSelected()">Mark complete</button>
     </span>
-    <select>
-      <option>Sort by due (newest first)</option>
-      <option>Sort by due (oldest first)</option>
+    <select ng-model="list.sortBySelect">
+      <option value="-'DueDate'">Sort by due (newest first)</option>
+      <option value="'DueDate'">Sort by due (oldest first)</option>
     </select>
+    <input type="checkbox" ng-model="list.showAll">Show Completed?</input>
   </div>
-  {{list.selectAll.val}}
+checkmark options
+        <i class="glyphicon glyphicon-ok"></i>
+        <i class="glyphicon glyphicon-ok-sign"></i>
   <div class="todoList">
-     <todo-item 
-     ng-click="list.editItem(item)"
-     ng-repeat="item in list.todos" 
+     <!-- ng-repeat="item in list.todos track by item.Id | orderBy: list.sortBySelect"  -->
+<!-- track by item.Id -->
+    <todo-item
+      ng-if="list.showAll || !item.Completed"
+     ng-repeat="item in list.todos | orderBy: list.sortBySelect track by $index" 
      todo-data="item" 
      on-delete="list.deleteItem(item)"
-     on-update="list.updateItem(item)"
+     on-edit="list.editItem(item)"
      on-complete="list.completeItem(item)"
      on-select="list.itemSelect(checked, item )"
      checked="list.selectAll">
      </todo-item>
   </div>
-  <button type="button" class="center" ng-click="list.addItem()" autofocus="autofocus">+</button>
+  <button type="button" class="center" ng-click="list.addItem()" autofocus="autofocus"><i class="glyphicon glyphicon-plus"></i></button>
 </div>
