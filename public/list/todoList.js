@@ -23,7 +23,6 @@ angular.module('TodoApp')
       todoFactory.list.query()
         .$promise.then(function removeBadData(data){
           instance.todos = data.filter(function(item){ if (item.Id !== 0) return item; });
-          console.log('get list called');
           instance.todos.forEach(function(item){
             console.log(item.Completed);
           });
