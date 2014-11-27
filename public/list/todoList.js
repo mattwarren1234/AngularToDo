@@ -4,13 +4,12 @@ angular.module('TodoApp')
     this.selectedItems = [];
     this.selectAll = false;
     this.showAll = true;
+    this.todos = [];
     this.sortOptions = [
       {name :  'Sort by due (newest first)', value :true },
       {name :  'Sort by due (oldest first)', value :false }
     ];
     this.sortBy = this.sortOptions[0];
-    // this.sortBySelect = 'DueDate';
-
     this.getList = function(){
      var instance = this; 
       /*
@@ -23,9 +22,6 @@ angular.module('TodoApp')
       todoFactory.list.query()
         .$promise.then(function removeBadData(data){
           instance.todos = data.filter(function(item){ if (item.Id !== 0) return item; });
-          instance.todos.forEach(function(item){
-            console.log(item.Completed);
-          });
         });
     };
 
@@ -93,7 +89,6 @@ angular.module('TodoApp')
       $modal.open(modalOptions)
         .result.then(function(updatedItem){
           //update local copy
-          console.log(updatedItem.Id);
           var update = {
             Id : updateId,
             Description : updatedItem.Description,
@@ -153,7 +148,6 @@ angular.module('TodoApp')
     };
 
     this.itemSelect =function (selected, item) {
-      console.log(selected);
       if (selected){
         this.selectedItems.push( item);
       } else {
