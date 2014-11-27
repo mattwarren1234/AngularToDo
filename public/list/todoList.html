@@ -1,39 +1,46 @@
-<h2 class="center">Todo list</h2>
 <div class="content-main" ng-controller="TodoList as list">
-  <div class="header">
-    <input type="checkbox" ng-model="list.selectAll" ng-click="list.toggleSelectAll(list.selectAll)">
-        <!-- .squaredOne -->
-       <!--  <div class="squaredOne">
-          <input type="checkbox" value="None" id="squaredOne" name="check" checked />
-          <label for="squaredOne"></label>
-        </div> -->
-        <!-- end .squaredOne -->
-    <span ng-show="list.selectedItems.length > 0">
-      <button type="button" ng-click="list.deleteSelected()">Delete Selected</button>
-      <button type="button" ng-click="list.completeSelected()">Mark complete</button>
+  <div id="groupActions">
+    <span class="col-md-1">
+      <button class="multiSel" type="button" 
+       ng-class="{selected : list.selectAll}" 
+       ng-click="list.toggleSelectAll()"></button>
     </span>
-    <select ng-model="list.sortBySelect">
-      <option value="-'DueDate'">Sort by due (newest first)</option>
-      <option value="'DueDate'">Sort by due (oldest first)</option>
-    </select>
-    <input type="checkbox" ng-model="list.showAll">Show Completed?</input>
+    <span  ng-show="list.selectedItems.length > 0">
+      <button class="groupActionButton" type="button" ng-click="list.deleteSelected()">Delete Selected</button>
+      <button class="groupActionButton" type="button" ng-click="list.completeSelected()">Mark Complete</button>
+    </span>
+    <span class="headerGroup">
+      <select value="'DueDate'" 
+        ng-model="list.sortBy"
+        ng-options="option as option.name for option in list.sortOptions">
+      </select>
+    </span>
+    <span class="headerGroup">
+      <input type="checkbox" id="showCompleted" ng-model="list.showAll"></input>
+      <label for="showCompleted" >Show Completed?</label>
+    </span>
   </div>
-checkmark options
-        <i class="glyphicon glyphicon-ok"></i>
-        <i class="glyphicon glyphicon-ok-sign"></i>
+
   <div class="todoList">
-     <!-- ng-repeat="item in list.todos track by item.Id | orderBy: list.sortBySelect"  -->
-<!-- track by item.Id -->
     <todo-item
-      ng-if="list.showAll || !item.Completed"
-     ng-repeat="item in list.todos | orderBy: list.sortBySelect track by $index" 
+      ng-show="list.showAll || !item.Completed"
+     ng-repeat="item in list.todos | orderBy: list.parseDate : list.sortBy.value" 
      todo-data="item" 
      on-delete="list.deleteItem(item)"
      on-edit="list.editItem(item)"
-     on-complete="list.completeItem(item)"
-     on-select="list.itemSelect(checked, item )"
+     on-complete="list.completeItem(completed, item)"
+     on-select="list.itemSelect(checked, item)"
      checked="list.selectAll">
      </todo-item>
+     <div class="center" ng-show="list.todos.length === 0">
+     No items available! Hit the button below to start creating items.
+     <br />
+     <br />
+     </div>
   </div>
-  <button type="button" class="center" ng-click="list.addItem()" autofocus="autofocus"><i class="glyphicon glyphicon-plus"></i></button>
+  <button type="button" id="addButton" class="center" ng-click="list.addItem()" autofocus="autofocus">
+    <span id="center">
+      +
+    </span>
+  </button>
 </div>

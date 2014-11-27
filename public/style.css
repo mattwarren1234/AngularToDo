@@ -1,15 +1,16 @@
-/*@import url('http://getbootstrap.com/dist/css/bootstrap.css');*/
+@media (min-width: 992px) {
+  .container {
+    width: 800px;
+    }
+}
 
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+  font-family: 'Open Sans', sans-serif;
 }
 
-.content-main {
-  width :  590px;
-}
-
-todo-item .container {
+todo-item .itemContainer {
   border: 1px solid black;
   border-radius: 4px;
   margin: 2px;
@@ -23,49 +24,7 @@ todo-item .delete {
 .center {
   display: block;
   margin: 0 auto;
-}
-squaredOne {
-  width: 28px;
-  height: 28px;
-  position: relative;
-  margin: 20px auto;
-  background: #fcfff4;
-  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-  background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
-}
-.squaredOne label {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  cursor: pointer;
-  background: -webkit-linear-gradient(top, #222222 0%, #45484d 100%);
-  background: linear-gradient(to bottom, #222222 0%, #45484d 100%);
-  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px white;
-}
-.squaredOne label:after {
-  content: '';
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  background: #27ae60;
-  background: -webkit-linear-gradient(top, #27ae60 0%, #145b32 100%);
-  background: linear-gradient(to bottom, #27ae60 0%, #145b32 100%);
-  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-}
-.squaredOne label:hover::after {
-  opacity: 0.3;
-}
-.squaredOne input[type=checkbox] {
-  visibility: hidden;
-}
-.squaredOne input[type=checkbox]:checked + label:after {
-  opacity: 1;
+  text-align: center;
 }
 .css-form input.ng-invalid.ng-dirty {
   background-color: #FA787E;
@@ -78,14 +37,135 @@ squaredOne {
 .inputErrorMsg {
   
 }
-.container.todoItem{
+.itemContainer.todoItem{
+  overflow: hidden;
   border-color: rgb(168, 168, 168);
+  padding-right: 1em;
 }
-div.todoItem.container:target{
+div.todoItem.itemContainer:target{
   background-color:black;
 
   }
-div.todoItem.container:hover{
+div.todoItem.itemContainer:hover{
   background-color:rgb(209, 222, 255);
   cursor:pointer;
   }
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: inherit;
+  /* Set the fixed height of the footer here */
+  height: 3em;
+  background-color: #f5f5f5;
+  text-align: center;
+  margin-top: 1em;
+}
+
+#header {
+  padding: .75em;
+}
+
+#body {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.delete {
+  background: transparent;
+  border: none;
+}
+.delete > i:hover {
+  font-weight: bold;
+}
+
+.completeButton {
+  color : rgb(162, 162, 162);
+  border-radius: 3px;
+  background: lightgray;
+  border: 1px solid lightgray;
+}
+.completed .completeButton {
+  color: black;
+  border-radius: 3px;
+  background: lightgray;
+  border: 1px solid lightgray;
+}
+.completed .completeButton > i{
+  color : green;
+}
+#completedDisplay {
+  color: green;
+}
+.todoItem .description {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+
+.multiSel {
+  color: black;
+  height: 15px;
+  width: 15px;
+  padding: 0px;
+  line-height: 1px;
+  border-radius: 5px;
+  border: 2px solid gray;
+  background-color: transparent;
+}
+.multiSel i {
+  font-size: 12px;
+}
+.multiSel.selected { 
+  background-color: gray;
+}
+
+.multiSelectArea{
+  padding-right: 1em;
+  padding-left: 1em;
+}
+#addButton{
+  background-color: lightgray;
+  border-radius:1em;
+  border: 1px solid rgb(83, 83, 83);;
+  padding-left: .65em;
+  padding-right: .65em;
+}
+#addButton:hover{
+  border-width:2px;
+}
+#addButton:hover > #center{
+    font-weight: bold;
+}
+#center{
+  font-size: 20px;
+}
+
+#groupActions{
+  margin-bottom: 1em;
+  border-top: 1px solid darkgrey;
+  border-bottom: 1px solid darkgrey;
+  padding: .4em;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+}
+
+.groupActionButton {
+  border: none;
+  background: white;
+}
+.groupActionButton:active{
+  font-weight: bolder;
+}
+.headerGroup{
+  margin-left: .5em;
+  margin-right: .5em;
+}
+
+.dueDate {
+  margin-right: .5em;
+}
+
+label{
+  font-weight: normal;
+}

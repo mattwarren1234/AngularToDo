@@ -3,10 +3,21 @@ angular.module('TodoApp')
   .controller('TodoList', ['todoFactory', '$modal', '$q', '$window', function(todoFactory, $modal, $q, $window){
     this.selectedItems = [];
     this.selectAll = false;
-    this.showAll = false;
-
+    this.showAll = true;
+    this.sortOptions = [
+      {name :  'Sort by due (newest first)', value :true },
+      {name :  'Sort by due (oldest first)', value :false }
+    ];
+    this.sortBy = this.sortOptions[0];
     // this.sortBySelect = 'DueDate';
+
     this.getList = function(){
+      var instance = this;
+
+      setTimeout(function(){instance.innerGet();}, 10);
+    };
+
+    this.innerGet =function(){
       var instance = this; 
       /*
       * I found a weird bug in the server - if you update a task at a given resource, but Id is not specified in the body, Id will be updated to 0.
@@ -18,11 +29,17 @@ angular.module('TodoApp')
       todoFactory.list.query()
         .$promise.then(function removeBadData(data){
           instance.todos = data.filter(function(item){ if (item.Id !== 0) return item; });
+          console.log('get list called');
+          instance.todos.forEach(function(item){
+            console.log(item.Completed);
+          });
         });
     };
-    this.getList();
 
-    this.toggleSelectAll = function(selectAll){
+    //     <option value="-'DueDate'">Sort by due (newest first)</option>
+    // <option value="'DueDate'">Sort by due (oldest first)</option>
+    this.getList();
+    this.updateSelectAll = function(selectAll){
       this.selectAll = selectAll;
       if (selectAll){
         this.selectedItems = this.todos.slice(0); 
@@ -31,33 +48,38 @@ angular.module('TodoApp')
       }
     };
 
+    this.toggleSelectAll = function(){
+      this.updateSelectAll(!this.selectAll);
+    };
+
     this.deleteSelected = function(){
       if (!$window.confirm('Delete selected items?')) return;
       var operations = [];
       var instance = this;
       this.selectedItems.forEach(function(item){
-        operations.push(todoFactory.item.delete({id : item.Id}));
+        operations.push(todoFactory.item.delete({id : item.Id}).$promise);
       });
       //Once all server requests are complete, get the server's copy of the list 
       $q.all(operations)
         .then(function onComplete(){
           instance.getList();
-          instance.toggleSelectAll(false);
+          instance.updateSelectAll(false);
         });
     };
 
     this.completeSelected = function(){
       var operations = [];
       var instance = this;
+      if (!$window.confirm('Mark selected items complete?')) return;
       this.selectedItems.forEach(function(item){
         var update = {Id : item.Id, Completed : true, Description : item.Description, DueDate : item.DueDate};
-        operations.push(todoFactory.item.update({id : item.Id}, update));
+        operations.push(todoFactory.item.update({id : item.Id}, update).$promise);
       });
       //Once all server requests are complete, get the server's copy of the list 
       $q.all(operations)
         .then(function onComplete(){
           instance.getList();
-          instance.toggleSelectAll(false);
+          instance.updateSelectAll(false);
         });
     };
 
@@ -111,16 +133,19 @@ angular.module('TodoApp')
       var position = arr.indexOf(item);
       if (position > -1) { arr.splice(position, 1); }
     };  
-
-    this.completeItem = function(item){
-      item.Completed = true;
-      var updateInfo = 
+    this.parseDate = function(str){
+      return new Date(str.DueDate);
+    };
+    this.completeItem = function(completed, item){
+      var update = 
         { Id : item.Id, 
-          Completed : item.Completed,
+          Completed : completed,
           DueDate : item.DueDate,
           Description : item.Description
         };
-        todoFactory.item.update({id : item.Id}, updateInfo);
+        item.completed = completed;
+        todoFactory.item.update({id : item.Id}, update);
+        this.todos.splice(this.todos.indexOf(item), 1, update);
     };
 
     this.deleteItem = function(item) {
@@ -131,7 +156,7 @@ angular.module('TodoApp')
       todoFactory.item.delete({id : item.Id})
         .$promise.then(function() {
           //was considering getting the list again....hmm.
-          });
+        });
     };
 
     this.itemSelect =function (selected, item) {

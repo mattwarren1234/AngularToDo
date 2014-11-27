@@ -1,15 +1,24 @@
-<div class="container todoItem" ng-click="itemSelected">
-  {{todoData.Id}}
-  <p ng-show="todoData.Id === 0">Item invalid - id of 0</p>
-  <i class="glyphicon glyphicon-unchecked"></i>
-  <input ng-checked="checked" ng-model="isChecked" type="checkbox" ng-click="onSelect({checked: isChecked})">
-  <button type="button" ng-click="onComplete()"><i class="glyphicon glyphicon-ok"></i></button>
-  <span class="content" ng-click="onEdit()">
-    <span class="dueDate"> {{todoData.DueDate | date : 'shortDate' }}</span>
-    <span class="description"> {{todoData.Description}}</span>
-    <span class="completed"> Completed : {{todoData.Completed}}</span>
+<div class="todoItem itemContainer" ng-click="itemSelected" ng-class="{completed : isComplete}">
+  <span class="col-md-1">
+     <button class="multiSel" type="button" 
+     ng-click="toggleChecked()" 
+     ng-class="{selected : isChecked}" ></button>
   </span>
+  <span class="col-md-2">
+    <button type="button" class="completeButton" ng-click="toggleCompleted()">
+      <i class="glyphicon glyphicon-ok"></i>
+    </button>
+  </span>
+  <span class="col-md-8 content" ng-click="onEdit()">
+    <span class="dueDate"> {{todoData.DueDate | date : 'shortDate' }}</span>
+    <span class="description">
+      <span id="completedDisplay" ng-show="isComplete" >Completed!</span> 
+      {{todoData.Description}}
+    </span>
+  </span>
+  <span>
    <button type="button" class="delete" ng-click="onDelete()">
       <i class="glyphicon glyphicon-trash"></i>
     </button>
+  </span>
 </div>
