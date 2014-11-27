@@ -1,7 +1,7 @@
 {
-  "name": "LinkedIn",
+  "name": "Angular Todo",
   "version": "0.0.0",
-  "description": "Site that interacts with the linkedin api",
+  "description": "Basic Angular todo website",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
