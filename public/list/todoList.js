@@ -12,13 +12,7 @@ angular.module('TodoApp')
     // this.sortBySelect = 'DueDate';
 
     this.getList = function(){
-      var instance = this;
-
-      setTimeout(function(){instance.innerGet();}, 10);
-    };
-
-    this.innerGet =function(){
-      var instance = this; 
+     var instance = this; 
       /*
       * I found a weird bug in the server - if you update a task at a given resource, but Id is not specified in the body, Id will be updated to 0.
       * So - if you update task 123 at /api/tasks/123 BUT Id is not specified in body, task Id will be set to 0.
